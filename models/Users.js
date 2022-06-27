@@ -100,4 +100,5 @@ userSchema.methods.isPasswordMatch = async function (enteredPassword) {
 };
 
 const User = mongoose.model("User", userSchema);
+
 module.exports = User;
