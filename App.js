@@ -26,8 +26,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 
-// Routes
-
+// routes
 
 //users routes
 app.use('/api/users', userRoutes)
@@ -42,4 +41,4 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-module.exports=app
+module.exports=app;
