@@ -38,3 +38,6 @@ app.use('/api/pets', petRoutes)
 
 app.use(notFound);
 app.use(errorHandler);
+
+
+module.exports=app
