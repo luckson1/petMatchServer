@@ -15,6 +15,8 @@ dotenv.config()
 //connect to Database
 dbConnect()
 
+
+// heroku connection message
 app.get("/",(req, res)=> {
     res.json({msg: "welcome!"})
 })
