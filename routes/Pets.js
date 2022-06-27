@@ -7,6 +7,6 @@ petRoutes=express.Router()
 
 
 petRoutes.post("/", authentication, upload, createPetProfileCtrl);
-petRoutes.get("/", fetchPetsByTypeCtrl)
+petRoutes.get("/", authentication, fetchPetsByTypeCtrl)
 petRoutes.get("/matched", authentication, fetchMatchedPetsCtrl)
 module.exports={petRoutes}
