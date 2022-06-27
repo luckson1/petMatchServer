@@ -15,7 +15,9 @@ dotenv.config()
 //connect to Database
 dbConnect()
 
-
+app.get("/",(req, res)=> {
+    res.json({msg: "welcome!"})
+})
 // middleware
 app.use(cors());
 app.use(express.json())
