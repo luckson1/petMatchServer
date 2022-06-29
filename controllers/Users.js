@@ -65,10 +65,16 @@ const loginUserCtrl = expressAsyncHandler(async (req, res) => {
 
 const createProfileCtrl = expressAsyncHandler(async (req, res) => {
     const id = req?.user?.id
-    console.log(id)
+    const filePath = req?.file?.path
+      // upload file to cloudinary
+      const result = await cloudinary.uploader.upload(filePath)
+
+      // get url of uploaded image
+      const image = result?.secure_url;
+  console.log(image)
     const {gender, petPreference, children, petOwned, garden, active, about } = req?.body
     
-    
+     
     
     const updateDocument = {
         $set: {
@@ -79,7 +85,8 @@ const createProfileCtrl = expressAsyncHandler(async (req, res) => {
             petOwned:petOwned, 
             garden:garden, 
             active:active, 
-            about:about
+            about:about,
+            image: image
         },
     }
  

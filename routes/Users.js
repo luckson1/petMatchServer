@@ -1,11 +1,13 @@
 const express= require('express')
-const multer = require('../utils/multer');
+
 const authentication = require('../middlewear/authentication');
 const { registerUserCtrl, createProfileCtrl, loginUserCtrl, fetchUserCtrl, updatePetMatchesCtrl } = require('../controllers/Users');
+const Multer = require('../utils/multer');
+const upload = Multer.single('image');
 userRoutes=express.Router()
 
 
-const upload = multer.single('image');
+
 
 userRoutes.post("/register", registerUserCtrl)
 userRoutes.put("/", upload, authentication, createProfileCtrl )
