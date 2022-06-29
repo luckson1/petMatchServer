@@ -32,7 +32,13 @@ const fetchPetsByTypeCtrl= expressAsyncHandler (async (req, res) => {
     const petPreference=req?.user?.petPreference
 
     try {
-        const query= {petType: petPreference}
+        let query;
+        if (petPreference=== "any") {
+            query={}
+        } else {
+            query= {petType: petPreference}
+        }
+      
         const pets= await Pet.find(query)
         res.json(pets)
     } catch (error) {

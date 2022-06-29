@@ -17,9 +17,9 @@ const token=generateToken(userId)
 
     //find if a user exists
 
-    // const userExists =
-    //     await User.findOne({ email });
-    // if (userExists) throw new Error('User already exists')
+    const userExists =
+        await User.findOne({ email });
+    if (userExists) throw new Error('User already exists')
 
 
 
