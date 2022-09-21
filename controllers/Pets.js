@@ -158,9 +158,57 @@ const fetchAllPetsCtl = async (req, res) => {
   }
 };
 
+const updatePetCtl = async (req, res) => {
+  const {id }= req.params;
+  const {
+    name,
+    breed,
+    age,
+    gender,
+    petTorrelance,
+    children,
+    petType,
+    garden,
+    active,
+    about,
+  } = req?.body;
+  try {
+    const pet = await Pet.findByIdAndUpdate(
+      id ,
+      {
+        name,
+        breed,
+        age,
+        gender,
+        petTorrelance,
+        children,
+        petType,
+        garden,
+        active,
+        about,
+      }
+    );
+ 
+    res.json({ pet });
+  } catch (error) {
+    res.json({ error });
+  }
+};
+const deletePetCtl= async(req, res)=> {
+  const {id}=req.params
+ 
+  try {
+    const pet= await Pet.findByIdAndDelete(id)
+    res.json({})
+  } catch (error) {
+    res.json({ error });
+  }
+}
 module.exports = {
   createPetProfileCtrl,
   fetchPetsByTypeCtrl,
   fetchMatchedPetsCtrl,
   fetchAllPetsCtl,
+  updatePetCtl,
+  deletePetCtl
 };
