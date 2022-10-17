@@ -64,7 +64,7 @@ const createProfileCtrl = expressAsyncHandler(async (req, res) => {
   // get url of uploaded image
   const image = result?.secure_url;
 
-  const { gender, petPreference, children, petOwned, garden, active, about } =
+  const { gender, petPreference, children, petOwned, garden, active, petAge, previousPets } =
     req?.body;
 
   const updateDocument = {
@@ -75,7 +75,8 @@ const createProfileCtrl = expressAsyncHandler(async (req, res) => {
       petOwned: petOwned,
       garden: garden,
       active: active,
-      about: about,
+      petAge: petAge,
+      previousPets: previousPets,
       image: image,
     },
   };

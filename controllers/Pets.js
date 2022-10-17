@@ -8,7 +8,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
   const {
     name,
     breed,
-    age,
+    petAge,
     gender,
     petTorrelance,
     children,
@@ -29,7 +29,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
     const pet = await Pet.create({
       name: name,
       breed: breed,
-      age: age,
+      petAge: petAge,
       gender: gender,
       petTorrelance: petTorrelance,
       children: children,
@@ -39,6 +39,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
       about: about,
       image: image,
     });
+
     res.json({ pet });
   } catch (error) {
     res.json({ error });
@@ -48,7 +49,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
 // fetch pets by type (dog or cat)
 
 const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
-  const { petPreference, children, petOwned, garden, active } = req?.user;
+  const { petPreference, children, petOwned, garden, active, petAge} = req?.user;
 
   try {
     let petPreferenceQuery = {};
@@ -56,6 +57,7 @@ const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
     let gardenQuery = {};
     let activeQuery = {};
     let petTorrelanceQuery = {};
+    let ageQuery= {}
 
     // filter pets based on preference (either dog, cat or both)
     if (petPreference === "any") {
@@ -63,7 +65,14 @@ const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
     } else {
       petPreferenceQuery = { petType: petPreference };
     }
-
+ // filter pets based on age preference 
+if(petAge === "any") {
+  ageQuery={}
+}else if (!petAge) {
+  ageQuery= {}
+} else {
+  ageQuery={petAge: petAge}
+}
     //filter pets based on whether they are socialised with children below 8 years
     // check if family has small children and filter accordingly
     if (children === "no") {
@@ -92,20 +101,15 @@ const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
     // check if family has other pets and filter accordingly
     if (petOwned === "none") {
       petTorrelanceQuery = {};
-    }
-    if (petOwned === "cat" && petPreference == "dogs") {
+    }else if (petOwned === "cat" && petPreference == "dogs") {
       petTorrelanceQuery = { petTorrelance: "both" };
-    }
-    if (petOwned === "cat" && petPreference === "cats") {
+    }else if (petOwned === "cat" && petPreference === "cats") {
       petTorrelanceQuery = {};
-    }
-    if (petOwned === "dog" && petPreference === "cats") {
+    }else if (petOwned === "dog" && petPreference === "cats") {
       petTorrelanceQuery = { petTorrelance: "both" };
-    }
-    if (petOwned === "dog" && petPreference === "dogs") {
+    }else if (petOwned === "dog" && petPreference === "dogs") {
       petTorrelanceQuery = {};
-    }
-    if (petOwned === "both") {
+    }else if (petOwned === "both") {
       petTorrelanceQuery = { petTorrelance: "both" };
     }
     const pets = await Pet.aggregate([
@@ -117,6 +121,7 @@ const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
             gardenQuery,
             activeQuery,
             petTorrelanceQuery,
+            ageQuery
           ],
         },
       },
@@ -163,14 +168,14 @@ const updatePetCtl = async (req, res) => {
   const {
     name,
     breed,
-    age,
+    petAge,
     gender,
     petTorrelance,
     children,
     petType,
     garden,
     active,
-    about,
+   
   } = req?.body;
   try {
     const pet = await Pet.findByIdAndUpdate(
@@ -178,18 +183,19 @@ const updatePetCtl = async (req, res) => {
       {
         name,
         breed,
-        age,
+        petAge,
         gender,
         petTorrelance,
         children,
         petType,
         garden,
         active,
-        about,
+       
       }
     );
  
     res.json({ pet });
+    console.log(pet)
   } catch (error) {
     res.json({ error });
   }
