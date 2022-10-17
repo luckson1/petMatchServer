@@ -1,0 +1,75 @@
+version: "3.9"
+services:
+
+    # build: 
+    #   context: ./client
+    #   dockerfile: Dockerfile
+    # stdin_open: true
+    # volumes: 
+    #   - /app/node_modules
+    #   - ./client :/app/client
+    # # ports: 
+    # #   - "3000:3000"
+    # networks:
+    #     - mern-app
+  api-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes: 
+      - /app/node_modules
+      - . :/app/
+    ports:
+      - "4000:4000"
+    networks:
+      - mern-app
+  #   depends_on : 
+  #     - mongo
+  # mongo: 
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - mern-app
+  #   volumes:
+  #     - "mongo-data:/data/db"
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: myMongo@2022
+  # mongo-express: 
+  #   image: mongo-express
+  #   depends_on:
+  #     - mongo
+  #   ports:
+  #     - "8081: 8081"
+  #   environment:
+  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=value
+  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=value
+  #     - ME_CONFIG_MONGODB_SERVICE=value
+  #     - ME_CONFIG_BASICAUTH_USERNAME=value
+  #     - ME_CONFIG_BASICAUTH_PASSWORD=value
+    
+  #   volumes:
+  #     - mongo-data
+  #   networks:
+  #     - mern-app
+
+  # nginx:
+  #   restart: always
+  #   depends_on:
+  #     - react-app
+  #     - api-server
+  #   build:
+  #       context: ./nginx
+  #       dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:80"
+  #   networks:
+  #     - mern-app
+networks:
+  mern-app:
+    driver: bridge
+# volumes: 
+#   mongo-data:
+#     driver: local
