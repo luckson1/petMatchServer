@@ -32,9 +32,7 @@ const userSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    gender: {
-      type: String,
-    },
+   
     petPreference: {
       type: String,
     },
@@ -50,7 +48,10 @@ const userSchema = new mongoose.Schema(
     active: {
       type: String,
     },
-    about: {
+    previousPets: {
+      type: String,
+    },
+    petAge: {
       type: String,
     },
     status: {
