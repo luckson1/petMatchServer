@@ -77,7 +77,9 @@ if(petAge === "any") {
     // check if family has small children and filter accordingly
     if (children === "no") {
       childrenQuery = {};
-    } else {
+    } else if (children==="Yes above 8"){
+      childrenQuery = {};
+    }else {
       childrenQuery = { children: children };
     }
 
@@ -85,7 +87,9 @@ if(petAge === "any") {
     // check if family has a garden and filter accordingly
     if (garden === "yes") {
       gardenQuery = {};
-    } else {
+    } else if (garden==="shared"){
+      gardenQuery = {};
+    }else {
       gardenQuery = { garden: garden };
     }
 
