@@ -16,7 +16,7 @@ userRoutes = express.Router();
 userRoutes.get("/", authentication, fetchUsersCtrl);
 userRoutes.get("/profile", authentication, fetchUserCtrl);
 userRoutes.post("/register", registerUserCtrl);
-userRoutes.put("/", upload, authentication, createProfileCtrl);
+userRoutes.put("/", authentication, createProfileCtrl);
 userRoutes.post("/login", loginUserCtrl);
 userRoutes.put("/:id", authentication, updatePetMatchesCtrl);
 module.exports = { userRoutes };
