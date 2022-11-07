@@ -11,7 +11,7 @@ const {
 } = require("../controllers/Users");
 const Multer = require("../utils/multer");
 const upload = Multer.single("image");
-userRoutes = express.Router();
+const userRoutes = express.Router();
 
 userRoutes.get("/", authentication, fetchUsersCtrl);
 userRoutes.get("/profile", authentication, fetchUserCtrl);

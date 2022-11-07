@@ -7,6 +7,7 @@ const { notFound, errorHandler } = require('./middlewear/errors');
 const dotenv=require ('dotenv');
 const { userRoutes } = require('./routes/Users');
 const { petRoutes } = require('./routes/Pets');
+const { donerRoutes } = require('./routes/Doners');
 
 
 // allow our node process to have access to the environment variables
@@ -33,6 +34,9 @@ app.use('/api/users', userRoutes)
 
 //pets routes
 app.use('/api/pets', petRoutes)
+
+//doners routes
+app.use('/api/doners', donerRoutes)
 
 
 //error handling //  

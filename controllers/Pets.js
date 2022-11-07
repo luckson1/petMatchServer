@@ -5,6 +5,7 @@ const cloudinary = require("../utils/cloudinary");
 require("dotenv").config();
 
 const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
+  const doner=req?.user?.id
   const {
     name,
     breed,
@@ -38,6 +39,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
       active: active,
       about: about,
       image: image,
+      doner: doner
     });
 
     res.json({ pet });

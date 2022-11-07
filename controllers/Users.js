@@ -26,6 +26,10 @@ const registerUserCtrl = expressAsyncHandler(async (req, res) => {
       lastName,
       password,
       userId,
+      petOwned,
+      vaccines,
+      reason,
+      admin
     });
 
     const token = generateToken(userId);

@@ -10,7 +10,7 @@ const {
 } = require("../controllers/Pets");
 const Multer = require("../utils/multer");
 const upload = Multer.single("image");
-petRoutes = express.Router();
+const petRoutes = express.Router();
 
 petRoutes.post("/", authentication, upload, createPetProfileCtrl);
 petRoutes.get("/", authentication, fetchPetsByTypeCtrl);

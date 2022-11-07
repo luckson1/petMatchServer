@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema(
+const donerSchema = new mongoose.Schema(
   {
     email: {
       type: String,
       required: true,
     },
-    userId: {
+    donerId: {
       type: String,
       required: true,
     },
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
     },
     isAdmin: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     password: {
       type: String,
@@ -33,42 +33,17 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
    
-    petPreference: {
-      type: String,
-    },
-    children: {
-      type: String,
-    },
     petOwned: {
       type: String,
     },
-    garden: {
-      type: String,
-    },
-    active: {
-      type: String,
-    },
-    previousPets: {
-      type: String,
-    },
-    petAge: {
-      type: String,
-    },
-    status: {
-      type: String,
-    },
-    petMatches: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Pet",
-      },
-    ],
+  
     vaccines: {
       type: String,
     },
     reason: {
       type: String,
     },
+
     passwordChangeAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -79,7 +54,7 @@ const userSchema = new mongoose.Schema(
 );
 
 //Password reset/forget
-userSchema.methods.createPasswordResetToken = async function () {
+donerSchema.methods.createPasswordResetToken = async function () {
   const resetToken = crypto.randomBytes(32).toString("hex");
   this.passwordResetToken = crypto
     .createHash("sha256")
@@ -90,7 +65,7 @@ userSchema.methods.createPasswordResetToken = async function () {
 };
 
 //Hash password
-userSchema.pre("save", async function (next) {
+donerSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -102,10 +77,10 @@ userSchema.pre("save", async function (next) {
 
 // check password matching
 //Verify password
-userSchema.methods.isPasswordMatch = async function (enteredPassword) {
+donerSchema.methods.isPasswordMatch = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const Doner = mongoose.model("Doner", donerSchema);
 
-module.exports = User;
+module.exports = Doner;
