@@ -48,7 +48,7 @@ const petSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-      doner: {
+      donor: {
         type: String
       }
 

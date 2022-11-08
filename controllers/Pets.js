@@ -5,7 +5,7 @@ const cloudinary = require("../utils/cloudinary");
 require("dotenv").config();
 
 const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
-  const doner=req?.user?.id
+  const donor=req?.user?.userId
   const {
     name,
     breed,
@@ -39,7 +39,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
       active: active,
       about: about,
       image: image,
-      doner: doner
+      donor: donor
     });
 
     res.json({ pet });
@@ -51,7 +51,7 @@ const createPetProfileCtrl = expressAsyncHandler(async (req, res) => {
 // fetch pets by type (dog or cat)
 
 const fetchPetsByTypeCtrl = expressAsyncHandler(async (req, res) => {
-  const { petPreference, children, petOwned, garden, active, petAge} = req?.user;
+  const { petPreference, children, petOwned, garden, active, petAge, isAdmin} = req?.user;
 
   try {
     let petPreferenceQuery = {};
@@ -118,6 +118,15 @@ if(petAge === "any") {
     }else if (petOwned === "both") {
       petTorrelanceQuery = { petTorrelance: "both" };
     }
+//admins access all the pets
+    if(isAdmin===true){
+      petPreferenceQuery={},
+      childrenQuery={},
+      gardenQuery={},
+      activeQuery={},
+      petTorrelanceQuery={},
+      ageQuery={}
+    }
     const pets = await Pet.aggregate([
       {
         $match: {
@@ -163,6 +172,19 @@ const fetchMatchedPetsCtrl = expressAsyncHandler(async (req, res) => {
 const fetchAllPetsCtl = async (req, res) => {
   try {
     const pets = await Pet.find({});
+    res.json({ pets });
+  } catch (error) {
+    res.jason({ error });
+  }
+};
+
+//fetch a given doners pets
+const fetchDonersPetsCtl = async (req, res) => {
+  const donor=req?.user?.userId
+console.log(donor)
+  try {
+    const pets = await Pet.find({donor:donor});
+ 
     res.json({ pets });
   } catch (error) {
     res.jason({ error });
@@ -222,5 +244,6 @@ module.exports = {
   fetchMatchedPetsCtrl,
   fetchAllPetsCtl,
   updatePetCtl,
-  deletePetCtl
+  deletePetCtl,
+  fetchDonersPetsCtl
 };

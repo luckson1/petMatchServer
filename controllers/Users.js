@@ -7,7 +7,16 @@ const { v4: uuidv4 } = require("uuid");
 // registering a user
 
 const registerUserCtrl = expressAsyncHandler(async (req, res) => {
-  const { email, firstName, lastName, password } = req?.body;
+  const {
+    email,
+    firstName,
+    lastName,
+    password,
+    vaccines,
+    reason,
+    isAdmin,
+    petOwned,
+  } = req?.body;
   const userId = uuidv4();
 
   // generate token
@@ -29,12 +38,13 @@ const registerUserCtrl = expressAsyncHandler(async (req, res) => {
       petOwned,
       vaccines,
       reason,
-      admin
+      isAdmin,
     });
-
+    console.log(user);
     const token = generateToken(userId);
     res.json({ user, token });
   } catch (error) {
+    console.log(error);
     res.json({ error });
   }
 });
@@ -62,8 +72,16 @@ const loginUserCtrl = expressAsyncHandler(async (req, res) => {
 const createProfileCtrl = expressAsyncHandler(async (req, res) => {
   const id = req?.user?.id;
 
-  const { gender, petPreference, children, petOwned, garden, active, petAge, previousPets } =
-    req?.body;
+  const {
+    gender,
+    petPreference,
+    children,
+    petOwned,
+    garden,
+    active,
+    petAge,
+    previousPets,
+  } = req?.body;
 
   const updateDocument = {
     $set: {
