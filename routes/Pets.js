@@ -15,7 +15,7 @@ const petRoutes = express.Router();
 
 petRoutes.post("/", authentication, upload, createPetProfileCtrl);
 petRoutes.get("/", authentication, fetchPetsByTypeCtrl);
-petRoutes.get("/all", authentication, fetchAllPetsCtl);
+petRoutes.get("/all",  fetchAllPetsCtl);
 petRoutes.get("/doner", authentication, fetchDonersPetsCtl);
 petRoutes.get("/matches", authentication, fetchMatchedPetsCtrl);
 petRoutes.put("/:id", authentication, updatePetCtl);
