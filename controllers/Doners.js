@@ -64,7 +64,7 @@ const createProfileCtrl = expressAsyncHandler(async (req, res) => {
   const updateDocument = {
     $set: {
     
-     perOwned: petOwned,
+     petOwned: petOwned,
      reason: reason,
      vaccine: vaccine,
     
