@@ -174,7 +174,7 @@ const fetchAllPetsCtl = async (req, res) => {
     const pets = await Pet.find({});
     res.json({ pets });
   } catch (error) {
-    res.jason({ error });
+    res.json({ error });
   }
 };
 
